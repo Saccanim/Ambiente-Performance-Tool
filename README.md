@@ -43,3 +43,6 @@ npx tsc --noEmit
 ## Documentacao de arquitetura
 
 - `docs/architecture.md`
+
+
+by Marcio Saccani
