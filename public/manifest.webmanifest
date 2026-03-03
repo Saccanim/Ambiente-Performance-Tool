@@ -1,0 +1,16 @@
+{
+  "name": "Ambient Performance Tool",
+  "short_name": "AmbientTool",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#06080f",
+  "theme_color": "#06080f",
+  "description": "Offline-first ambient performance engine for musicians.",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
