@@ -1,5 +1,6 @@
 # Ambient Performance Tool
 
+
 Ferramenta de performance em tempo real com foco em arquitetura offline-first, pronta para evoluir de Web para PWA e empacotamento mobile com Capacitor.
 
 ## Stack
