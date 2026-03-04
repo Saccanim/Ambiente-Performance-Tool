@@ -90,6 +90,60 @@ button:disabled {
   font-size: 0.95rem;
 }
 
+.control-select {
+  width: 100%;
+  background: #0f1626;
+  color: #edf3ff;
+  border: 1px solid rgba(128, 160, 216, 0.35);
+  border-radius: 10px;
+  padding: 10px;
+}
+
 .control-input {
   width: 100%;
+}
+
+.effect-group {
+  margin: 0;
+  border: 1px solid rgba(128, 160, 216, 0.35);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.effect-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.effect-item {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.effect-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d5e1f5;
+  font-size: 0.92rem;
+}
+
+.effect-intensity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.effect-slider {
+  width: 100%;
+}
+
+.effect-value {
+  min-width: 40px;
+  color: #bfd1ef;
+  font-size: 0.85rem;
+  text-align: right;
 }

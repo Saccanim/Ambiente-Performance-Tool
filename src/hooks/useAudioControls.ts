@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { EFFECT_OPTIONS, type EffectType, type InstrumentType, type Tonality } from '@/audio/core/audioConfig'
 import { audioEngine } from '@/audio/core/ToneAudioEngine'
 import { useAudioStore } from '@/store/audioStore'
 
@@ -13,12 +14,20 @@ export function useAudioControls() {
     volume,
     lowCut,
     highCut,
+    instrument,
+    effects,
+    effectIntensity,
+    tonality,
     setAudioEnabled,
     setPadPlaying,
     setBpm,
     setVolume,
     setLowCut,
     setHighCut,
+    setInstrument,
+    setEffects,
+    setEffectIntensity,
+    setTonality,
   } = useAudioStore()
 
   const initializeAudio = useCallback(async () => {
@@ -29,6 +38,12 @@ export function useAudioControls() {
       audioEngine.setBpm(bpm)
       audioEngine.setVolume(volume)
       audioEngine.setFilter(lowCut, highCut)
+      audioEngine.setInstrument(instrument)
+      audioEngine.setEffects(effects)
+      for (const effect of EFFECT_OPTIONS) {
+        audioEngine.setEffectIntensity(effect, effectIntensity[effect])
+      }
+      audioEngine.setTonality(tonality)
       setAudioEnabled(true)
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Falha ao iniciar audio no navegador.'
@@ -37,7 +52,7 @@ export function useAudioControls() {
     } finally {
       setIsInitializing(false)
     }
-  }, [bpm, highCut, lowCut, setAudioEnabled, volume])
+  }, [bpm, effectIntensity, effects, highCut, instrument, lowCut, setAudioEnabled, tonality, volume])
 
   const togglePad = useCallback(() => {
     const nextState = !padPlaying
@@ -77,6 +92,46 @@ export function useAudioControls() {
     [lowCut, setHighCut],
   )
 
+  const updateInstrument = useCallback(
+    (nextValue: InstrumentType) => {
+      setInstrument(nextValue)
+      audioEngine.setInstrument(nextValue)
+    },
+    [setInstrument],
+  )
+
+  const toggleEffect = useCallback(
+    (effect: EffectType, enabled: boolean) => {
+      const active = new Set(effects)
+      if (enabled) {
+        active.add(effect)
+      } else {
+        active.delete(effect)
+      }
+
+      const nextEffects = EFFECT_OPTIONS.filter((item) => active.has(item))
+      setEffects(nextEffects)
+      audioEngine.setEffects(nextEffects)
+    },
+    [effects, setEffects],
+  )
+
+  const updateEffectIntensity = useCallback(
+    (effect: EffectType, nextValue: number) => {
+      setEffectIntensity(effect, nextValue)
+      audioEngine.setEffectIntensity(effect, nextValue)
+    },
+    [setEffectIntensity],
+  )
+
+  const updateTonality = useCallback(
+    (nextValue: Tonality) => {
+      setTonality(nextValue)
+      audioEngine.setTonality(nextValue)
+    },
+    [setTonality],
+  )
+
   return {
     audioEnabled,
     padPlaying,
@@ -84,6 +139,10 @@ export function useAudioControls() {
     volume,
     lowCut,
     highCut,
+    instrument,
+    effects,
+    effectIntensity,
+    tonality,
     isInitializing,
     audioError,
     initializeAudio,
@@ -92,5 +151,9 @@ export function useAudioControls() {
     updateVolume,
     updateLowCut,
     updateHighCut,
+    updateInstrument,
+    toggleEffect,
+    updateEffectIntensity,
+    updateTonality,
   }
 }
